@@ -12,7 +12,7 @@ end
 
 class Coupon
   attr_reader :name, :discount_type, :discount
-
+  
   def initialize(name, type)
     @name = name
     @discount_type  = type.first.first
@@ -54,8 +54,8 @@ class Invoice
   end
   
   def promo_line(product, count)
-    discount = sprintf("-%.2f",
-    @cart.discount(product.price, count, product.promo)).rjust(9)
+    discount = sprintf("-%9.2f",
+    @cart.discount(product.price, count, product.promo))
     "#{promo_name_line(product.promo.first)}|#{discount} |\n"
   end
 
@@ -81,7 +81,7 @@ class Invoice
   end
 
   def coupon_line
-    @cart.total # calculate total, now price_without_coupon is not nil
+    @cart.total # calculate total, now without_coupon is not nil
     off = @cart.coupon.discount_type == :percent ? "#{@cart.coupon.discount}%" :
     sprintf("%.2f", @cart.coupon.discount)
     name = "| Coupon #{@cart.coupon.name} - #{off} off".ljust(48) + " |"
